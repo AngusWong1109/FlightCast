@@ -7,16 +7,20 @@ pass_dep = pd.read_csv('pass_departure_data.csv')
 selected_columns = ['date', 'arrival', 'time', 'flight', 'status', 'destination']
 pass_dep = pass_dep[selected_columns]
 # print(pass_dep)
-for time in pass_dep['status']:
-    time_split = time.split()
-    if len(time_split) == 1:
-        continue
-    elif len(time_split) > 2:
-        date_str = time[time.find("(")+1:time.find(")")]
-        print('date_str: ', date_str)
-    time_str = time_split[1]
+for i in range(pass_dep.shape[0]):
+    time_split = pass_dep['status'][i].split()
     try:
-        dt_time = dt.datetime.strptime(time_str, "%H:%M")
+        if len(time_split) == 1:
+            continue
+        elif len(time_split) > 2:
+            date_str = time_split[1] + ' ' + time_split[2]
+            status_time = dt.datetime.strptime(date_str, "%H:%M (%d/%m/%Y)")
+        else:
+            date_str = pass_dep['date'][i] + ' ' + time_split[1]
+            status_time = dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+        
+        schedule_time_str = pass_dep['date'][i] + ' ' + pass_dep['time'][i]
+        print(schedule_time_str)
     except ValueError:
         print("Invalid format for time or date")
 
