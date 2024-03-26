@@ -1,85 +1,58 @@
 import pandas as pd
 import datetime as dt
 
-def process_pass_dep_data(filepath):
-    # Read passenger departure data
-    # Status: Cancelled, Dep XX:XX, Dep XX:XX (XX/XX/XXXX)
-    pass_dep = pd.read_csv(filepath)
-    selected_columns = ['date', 'arrival', 'time', 'flight', 'status', 'destination']
-    pass_dep = pass_dep[selected_columns]
-    pass_dep['actual time diff'] = None
-    pass_dep['label'] = None
-    for i in range(pass_dep.shape[0]):
-        time_split = pass_dep['status'][i].split()
+def label_data(row):
+    if row['actual time diff'] > 120:
+            return 'Delayed more than 2 hours'
+    elif row['actual time diff'] > 60:
+        return 'Delayed 1 to 2 hours'
+    elif row['actual time diff'] > 30:
+        return 'Delayed 30 mins to 1 hours'
+    elif row['actual time diff'] > 5:
+        return 'Delayed 5 to 30 mins'
+    else:
+        return 'On time'
+
+def process_flight_data(filepath, arrival = True):
+    # Read data
+    df = pd.read_csv(filepath)
+    selected_columns = ['date', 'arrival', 'time', 'flight', 'status']
+    if(arrival):
+        selected_columns.append('origin')
+    else:
+        selected_columns.append('destination')
+    df = df[selected_columns]
+    df['actual time diff'] = None
+    df['label'] = None
+    
+    def parse_and_cal_diff(row):
         try:
+            time_split = row['status'].split()
             if len(time_split) == 1:
-                continue
-            elif len(time_split) > 2:
-                date_str = time_split[1] + ' ' + time_split[2]
-                status_time = dt.datetime.strptime(date_str, "%H:%M (%d/%m/%Y)")
-            else:
-                date_str = pass_dep['date'][i] + ' ' + time_split[1]
-                status_time = dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-        
-            schedule_time_str = pass_dep['date'][i] + ' ' + pass_dep['time'][i]
+                return
+            if(not arrival):
+                if len(time_split) > 2:
+                    date_str = time_split[1] + ' ' + time_split[2]
+                    status_time = dt.datetime.strptime(date_str, "%H:%M (%d/%m/%Y)")
+                else:
+                    date_str = row['date'] + ' ' + time_split[1]
+                    status_time = dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+            elif (arrival):
+                if len(time_split) > 3:
+                    date_str = time_split[2] + ' ' + time_split[3]
+                    status_time = dt.datetime.strptime(date_str, "%H:%M (%d/%m/%Y)")
+                else:
+                    date_str = row['date'] + ' ' + time_split[2]
+                    status_time = dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+            schedule_time_str = row['date'] + ' ' + row['time']
             schedule_time = dt.datetime.strptime(schedule_time_str, "%Y-%m-%d %H:%M")
             time_diff = status_time - schedule_time
-
+            time_diff_mins = time_diff.total_seconds() / 60
+            return time_diff_mins
         except ValueError:
             print("Invalid format for time or date")
+            return None
 
-        time_diff_mins = time_diff.total_seconds() / 60
-        pass_dep.loc[i, 'actual time diff'] = time_diff_mins
-        if time_diff_mins > 120:
-            pass_dep.loc[i, 'label'] = 'Delayed more than 2 hours'
-        elif time_diff_mins > 60:
-            pass_dep.loc[i, 'label'] = 'Delayed 1 to 2 hours'
-        elif time_diff_mins > 30:
-            pass_dep.loc[i, 'label'] = 'Delayed 30 mins to 1 hours'
-        elif time_diff_mins > 5:
-            pass_dep.loc[i, 'label'] = 'Delayed 5 to 30 mins'
-        else:
-            pass_dep.loc[i, 'label'] = 'On time'
-    return pass_dep
-
-def process_pass_arr_data(filepath):
-    # Read passenger arrival data
-    # Status: Cancelled, At gate XX:XX, At gate XX:XX (XX/XX/XXXX)
-    pass_arr = pd.read_csv('pass_arrival_data.csv')
-    selected_columns = ['date', 'arrival', 'time', 'flight', 'status', 'origin']
-    pass_arr = pass_arr[selected_columns]
-    pass_arr['actual time diff'] = None
-    pass_arr['label'] = None
-    for i in range(pass_arr.shape[0]):
-        time_split = pass_arr['status'][i].split()
-        try:
-            if len(time_split) == 1:
-                continue
-            elif len(time_split) > 3:
-                date_str = time_split[2] + ' ' + time_split[3]
-                status_time = dt.datetime.strptime(date_str, "%H:%M (%d/%m/%Y)")
-            else:
-                date_str = pass_arr['date'][i] + ' ' + time_split[2]
-                status_time = dt.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-        
-            schedule_time_str = pass_arr['date'][i] + ' ' + pass_arr['time'][i]
-            schedule_time = dt.datetime.strptime(schedule_time_str, "%Y-%m-%d %H:%M")
-            time_diff = status_time - schedule_time
-
-        except ValueError:
-            print("Invalid format for time or date")
-
-        time_diff_mins = time_diff.total_seconds() / 60
-        pass_arr.loc[i, 'actual time diff'] = time_diff_mins
-        if time_diff_mins > 120:
-            pass_arr.loc[i, 'label'] = 'Delayed more than 2 hours'
-        elif time_diff_mins > 60:
-            pass_arr.loc[i, 'label'] = 'Delayed 1 to 2 hours'
-        elif time_diff_mins > 30:
-            pass_arr.loc[i, 'label'] = 'Delayed 30 mins to 1 hours'
-        elif time_diff_mins > 5:
-            pass_arr.loc[i, 'label'] = 'Delayed 5 to 30 mins'
-        else:
-            pass_arr.loc[i, 'label'] = 'On time'
-
-    return pass_arr
+    df['actual time diff'] = df.apply(parse_and_cal_diff, axis=1)
+    df['label'] = df.apply(label_data, axis=1)
+    return df
