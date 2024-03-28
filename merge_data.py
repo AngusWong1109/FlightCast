@@ -2,7 +2,6 @@ from process_flight_data import process_flight_data
 from process_weather_data import process_weather_data
 import pandas as pd
 import datetime as dt
-from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 def label_time(row):
     date_str = row['date'] + ' ' + row['time']
