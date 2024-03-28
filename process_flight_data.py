@@ -2,7 +2,9 @@ import pandas as pd
 import datetime as dt
 
 def label_data(row):
-    if row['actual time diff'] > 120:
+    if row['status'] == 'Cancelled':
+        return 'Cancelled'
+    elif row['actual time diff'] > 120:
             return 'Delayed more than 2 hours'
     elif row['actual time diff'] > 60:
         return 'Delayed 1 to 2 hours'
