@@ -1,17 +1,18 @@
 import pandas as pd
 import datetime as dt
+import ast
 
 def label_data(row):
     if row['status'] == 'Cancelled':
-        return 'Cancelled'
+        return 'Cancell'
     elif row['actual time diff'] > 120:
-            return 'Delayed more than 2 hours'
+            return 'Delay more than 2 hours'
     elif row['actual time diff'] > 60:
-        return 'Delayed 1 to 2 hours'
+        return 'Delay 1 to 2 hours'
     elif row['actual time diff'] > 30:
-        return 'Delayed 30 mins to 1 hours'
+        return 'Delay 30 mins to 1 hours'
     elif row['actual time diff'] > 5:
-        return 'Delayed 5 to 30 mins'
+        return 'Delay 5 to 30 mins'
     else:
         return 'On time'
 
@@ -24,8 +25,24 @@ def process_flight_data(filepath, arrival = True):
     else:
         selected_columns.append('destination')
     df = df[selected_columns]
+    df['flight_number'] = None
+    df['airline'] = None
     df['actual time diff'] = None
     df['label'] = None
+    
+    for i in range(len(df)):
+        data = ast.literal_eval(df['flight'].loc[i])
+        flight_numbers = []
+        airlines = []
+        for flight_info in data:
+            flight_number = flight_info['no']
+            airline = flight_info['airline']
+            flight_numbers.append(flight_number)
+            airlines.append(airline)
+        flight_numbers_str = ', '.join(flight_numbers)
+        airlines_str = ', '.join(airlines)
+        df.loc[i, 'flight_number'] = flight_numbers_str
+        df.loc[i, 'airline'] = airlines_str
     
     def parse_and_cal_diff(row):
         try:
@@ -57,4 +74,5 @@ def process_flight_data(filepath, arrival = True):
 
     df['actual time diff'] = df.apply(parse_and_cal_diff, axis=1)
     df['label'] = df.apply(label_data, axis=1)
+    
     return df

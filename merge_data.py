@@ -20,7 +20,7 @@ def merged_dep_weather_data():
 
     merged_dep_weather_data = pass_dep.merge(weather_data, how = 'left', on='datetime')
     merged_dep_weather_data = merged_dep_weather_data.drop_duplicates()
-    selected_dep_columns = ['date', 'arrival', 'time', 'flight', 'destination', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'preciptype', 'snow', 'snowdepth', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'icon', 'label']
+    selected_dep_columns = ['date', 'time', 'flight_number', 'airline', 'destination', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'snow', 'snowdepth', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'icon', 'label']
     dep_weather = merged_dep_weather_data[selected_dep_columns]
     return dep_weather
 
@@ -35,6 +35,6 @@ def merged_arr_weather_data():
 
     merged_arr_weather_data = pass_arr.merge(weather_data, how = 'left', on='datetime')
     merged_arr_weather_data = merged_arr_weather_data.drop_duplicates()
-    selected_arr_columns = ['date', 'arrival', 'time', 'flight', 'origin', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'preciptype', 'snow', 'snowdepth', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'icon', 'label']
+    selected_arr_columns = ['date', 'time', 'flight_number', 'airline', 'origin', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'snow', 'snowdepth', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'icon', 'label']
     arr_weather = merged_arr_weather_data[selected_arr_columns]
     return arr_weather

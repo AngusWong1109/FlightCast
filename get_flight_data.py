@@ -59,7 +59,7 @@ while start_date <= end_date:
     cargo_dep_total_df = pd.concat([cargo_dep_total_df, cargo_dep_df], axis=0)
 
     start_date = start_date + timedelta(days=1)
-arr_data_file = pass_arr_total_df.to_csv('pass_arrival_data.csv')
-dep_data_file = pass_dep_total_df.to_csv('pass_departure_data.csv')
-cargo_arr_data_file = cargo_arr_total_df.to_csv('cargo_arrival_data.csv')
-cargo_dep_data_file = cargo_dep_total_df.to_csv('cargo_departure_data.csv')
+arr_data_file = pass_arr_total_df.to_csv('pass_arrival_data.csv', index=False)
+dep_data_file = pass_dep_total_df.to_csv('pass_departure_data.csv', index=False)
+cargo_arr_data_file = cargo_arr_total_df.to_csv('cargo_arrival_data.csv', index=False)
+cargo_dep_data_file = cargo_dep_total_df.to_csv('cargo_departure_data.csv', index=False)
