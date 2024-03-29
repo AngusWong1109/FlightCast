@@ -2,9 +2,19 @@
 
 This is a flight status prediction app based on data from Hong Kong International Airport (HKIA) provided by the Airport Authority Hong Kong (AA). The prediction will be divided into several categories: **On time**, **Cancelled**, **Delayed 5 to 30 minutes**, **Delayed 30 mins to 1 hours**, **Delayed 1 - 2 hours**, and **Delayed more than 2 hours**.
 
+# Data file
+
+Captured data is flight information from 2023/12/23 to 2024/03/25
+
+- [`pass_departure_data.csv`](pass_departure_data.csv): Flight information of civil departure flight
+- [`pass_arrival_data.csv`](pass_arrival_data.csv): Flight information of civil arrival flight
+- [`cargo_departure_data.csv`](cargo_departure_data.csv): Flight information of cargo departure flight
+- [`cargo_arrival_data.csv`](cargo_arrival_data.csv): Flight information of cargo arrival flight
+
 # Resources
 
 ## Library Used
+
 - Requests
 - Scikit-learn
 - Pandas
@@ -13,6 +23,7 @@ This is a flight status prediction app based on data from Hong Kong Internationa
 - Tensorflow Lite
 
 ## Programming Language Used
+
 - Python
 - Kotlin
 
