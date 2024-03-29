@@ -30,7 +30,7 @@ Captured data is flight information from 2023/12/23 to 2024/03/25
 ## Data source
 
 - [Flight schedule information of Hong Kong International Airport (Historical), Airport Authority Hong Kong](https://data.gov.hk/en-data/dataset/aahk-team1-flight-info/resource/8f41b55c-a2ef-4963-bb25-96d8b21f3db4)
-- [Visual Crossing](https://www.visualcrossing.com/)
+- [Visual Crossing Weather Data](https://www.visualcrossing.com/)
 
 ### Things to get in mind
 
