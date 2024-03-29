@@ -27,21 +27,23 @@ This is a flight status prediction app based on data from Hong Kong Internationa
 
 # Process
 
-## 1. Get Data
+## Extract-Transform-Load (ETL)
+
+### 1. Extract: Get Data
    
 - [`get_flight_data.py`](get_flight_data.py): Fetching historical flight information data for passenger departure and arrival, and cargo departure and arrival
 - [`get_weather_data.py`](get_weather_data.py): Fetching historical weather data of HKIA
 
-## 2. Process Data
+### 2. Transform: Process Data
 
 - [`process_flight_data.py`](process_flight_data.py): Added Label for later training model use
 - [`process_weather_data.py`](process_weather_data.py): Removed unwanted columns
 
-## 3. Merge Data
+### 3. Merge Data
 
 - [`merge_data.py`](merge_data.py): Merged flight information and weather data based on given datetime
 
-## 4. Train the model
+### 4. Load: Train the model
 
 - [`model.py`](model.py): Train the AI model to predict the flight status
 
