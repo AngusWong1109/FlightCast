@@ -2,8 +2,8 @@ from requests import get
 from datetime import datetime, timedelta
 
 url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Hong%20Kong%20International%20Airport/{}/{}?unitGroup=metric&include=hours&key=3TX3Y9V92EQVZ7SG4ZT6PKEDW&contentType=csv'
-start_date = datetime(2024,3,7)
-end_date = datetime(2024,3,25)
+start_date = datetime(2024,3,26)
+end_date = datetime(2024,3,31)
 csv_file = open('weather_data.csv', 'ab')
 
 while start_date < end_date:

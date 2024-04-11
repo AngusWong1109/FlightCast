@@ -9,8 +9,8 @@ passen_dep_url = 'https://www.hongkongairport.com/flightinfo-rest/rest/flights/p
 cargo_dep_url = 'https://www.hongkongairport.com/flightinfo-rest/rest/flights/past?date={}&arrival=false&cargo=true&lang=en'
 
 # Fetch data at most previous 90 days or next 14 days
-start_date = datetime(2024,3,21)
-end_date = datetime(2024,3,25)
+start_date = datetime(2024,3,26)
+end_date = datetime(2024,3,31)
 if os.path.exists('pass_arrival_data.csv'):
     pass_arr_total_df = pd.read_csv('pass_arrival_data.csv')
     pass_dep_total_df = pd.read_csv('pass_departure_data.csv')
