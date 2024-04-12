@@ -10,6 +10,7 @@ from process_flight_data import process_flight_data
 import pandas as pd
 import numpy as np
 import time
+import random
 
 dep_weather = merged_dep_weather_data()
 arr_weather = merged_arr_weather_data()
