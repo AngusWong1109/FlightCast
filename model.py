@@ -39,7 +39,7 @@ print(cm)
 
 n = 1000
 removeData = [] #To ensure that we are not removing any data that we have removed before
-influence = np.zeros(n)
+influence = np.zeros((n, 4))
 for x in range(X_train.shape[0]):
     removeData.append(False)
 for i in range(n):    
@@ -61,7 +61,10 @@ for i in range(n):
     new_accuracy = new_model.score(X_test, y_test)
     print("The score of ", i+1, "th run is ", new_accuracy)
     influence_score = new_accuracy - orig_accuracy
-    influence[i] = influence_score
+    influence[i][0] = rmd
+    influence[i][1] = orig_accuracy
+    influence[i][2] = new_accuracy
+    influence[i][3] = influence_score
     print("influence score: ", influence_score)
 
 np.savetxt('./dep_LOO_influence.txt', influence, delimiter=',')
@@ -91,7 +94,7 @@ print(cm)
 
 n = 1000
 removeData = [] #To ensure that we are not removing any data that we have removed before
-influence = np.zeros(n)
+influence = np.zeros((n,4))
 for x in range(X_train.shape[0]):
     removeData.append(False)
 for i in range(n):    
@@ -113,7 +116,10 @@ for i in range(n):
     new_accuracy = new_model.score(X_test, y_test)
     print("The score of ", i+1, "th run is ", new_accuracy)
     influence_score = new_accuracy - orig_accuracy
-    influence[i] = influence_score
+    influence[i][0] = rmd
+    influence[i][1] = orig_accuracy
+    influence[i][2] = new_accuracy
+    influence[i][3] = influence_score
     print("influence score: ", influence_score)
 
 np.savetxt('./arr_LOO_influence.txt', influence, delimiter=',')
