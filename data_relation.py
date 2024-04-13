@@ -80,14 +80,14 @@ def count_label_by_destination(df, uniqueLabel, uniqueDestination, uniqueDate):
             status_by_destination.loc[dateStr] = label_counts
             status_by_destination.to_csv(('./table/dep/flight_status_{}.csv').format(destination))
 
-            fig, ax = plt.subplots()
+            fig, ax = plt.subplots(figsize=(15,6))
             for labelStr in uniqueLabel:
                 ax.plot(status_by_destination.index, status_by_destination[labelStr], marker='o', markersize=4, label = labelStr)
             ax.set_xlabel("Date")
             ax.set_ylabel("Count")
             ax.set_title(("Flight status from Hong Kong to {}").format(destination))
             ax.tick_params(axis='x', which='major', rotation=90)
-            plt.legend(bbox_to_anchor=(0.5, 1.2), loc='upper center')
+            plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
             plt.tight_layout()
             plt.savefig(('./pics/dep/flight_status_{}').format(destination))
             plt.close()
@@ -102,14 +102,14 @@ def count_label_by_origin(df, uniqueLabel, uniqueOrigin, uniqueDate):
             status_by_origin.loc[dateStr] = label_counts
             status_by_origin.to_csv(('./table/arr/flight_status_{}.csv').format(origin))
 
-            fig, ax = plt.subplots()
+            fig, ax = plt.subplots(figsize=(15,6))
             for labelStr in uniqueLabel:
                 ax.plot(status_by_origin.index, status_by_origin[labelStr], marker='o', markersize=4, label = labelStr)
             ax.set_xlabel("Date")
             ax.set_ylabel("Count")
             ax.set_title(("Flight status from Hong Kong to {}").format(origin))
             ax.tick_params(axis='x', which='major', rotation=90)
-            plt.legend(bbox_to_anchor=(0.5, 1.2), loc='upper center')
+            plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
             plt.tight_layout()
             plt.savefig(('./pics/arr/flight_status_{}').format(origin))
             plt.close()
@@ -136,7 +136,7 @@ DEP_DIR = 'dep'
 # count_label_by_date(dep_weather, depUniqueDate, depUniqueLabel, DEP_DIR)
 # count_label_by_wind(dep_weather, depUniqueLabel, DEP_DIR)
 # count_label_by_flight_mode(dep_weather, depUniqueLabel, DEP_DIR)
-# count_label_by_destination(dep_weather, depUniqueLabel, depUniqueDestination, depUniqueDate)
+count_label_by_destination(dep_weather, depUniqueLabel, depUniqueDestination, depUniqueDate)
 # count_label_by_condition(dep_weather, depUniqueLabel, depUniqueCondition, DEP_DIR)
 
 arr_weather = merged_arr_weather_data()
@@ -152,5 +152,5 @@ ARR_DIR = 'arr'
 # count_label_by_date(arr_weather, arrUniqueDate, arrUniqueLabel, ARR_DIR)
 # count_label_by_wind(arr_weather, arrUniqueLabel, ARR_DIR)
 # count_label_by_flight_mode(arr_weather, arrUniqueLabel, ARR_DIR)
-count_label_by_origin(arr_weather, arrUniqueLabel, arrUniqueOrigin, arrUniqueDate)
-count_label_by_condition(arr_weather, arrUniqueLabel, arrUniqueCondition, ARR_DIR)
+# count_label_by_origin(arr_weather, arrUniqueLabel, arrUniqueOrigin, arrUniqueDate)
+# count_label_by_condition(arr_weather, arrUniqueLabel, arrUniqueCondition, ARR_DIR)
