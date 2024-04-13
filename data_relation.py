@@ -76,21 +76,31 @@ uniqueCondition = np.unique(dep_weather['conditions']) #6 weather conditions
 #     status_by_flight_mode.loc[mode] = label_counts
 #     status_by_flight_mode.to_csv('./table/status_by_flight_mode.csv')
 
-status_by_destination = pd.DataFrame(columns=uniqueLabel, index=uniqueDate)
-for destination in uniqueDestination:
-    for dateStr in uniqueDate:
-        filteredData = dep_weather[(dep_weather['date'] == dateStr) & (dep_weather['destination'] == destination)]
-        label_counts = filteredData['label'].value_counts()
-        label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
-        status_by_destination.loc[dateStr] = label_counts
+# status_by_destination = pd.DataFrame(columns=uniqueLabel, index=uniqueDate)
+# for destination in uniqueDestination:
+#     for dateStr in uniqueDate:
+#         filteredData = dep_weather[(dep_weather['date'] == dateStr) & (dep_weather['destination'] == destination)]
+#         label_counts = filteredData['label'].value_counts()
+#         label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
+#         status_by_destination.loc[dateStr] = label_counts
+#         status_by_destination.to_csv(('./table/flight_status_{}.csv').format(destination))
 
-        fig, ax = plt.subplots()
-        for labelStr in uniqueLabel:
-            ax.plot(status_by_destination.index, status_by_destination[labelStr], label = labelStr)
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Count")
-        ax.set_title(("Flight status from Hong Kong to {}").format(destination))
-        ax.tick_params(axis='x', which='major', rotation=90)
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(('./pics/flight_status_{}').format(destination))
+#         fig, ax = plt.subplots()
+#         for labelStr in uniqueLabel:
+#             ax.plot(status_by_destination.index, status_by_destination[labelStr], marker='o', markersize=4, label = labelStr)
+#         ax.set_xlabel("Date")
+#         ax.set_ylabel("Count")
+#         ax.set_title(("Flight status from Hong Kong to {}").format(destination))
+#         ax.tick_params(axis='x', which='major', rotation=90)
+#         plt.legend()
+#         plt.tight_layout()
+#         plt.savefig(('./pics/flight_status_{}').format(destination))
+#         plt.close()
+
+status_by_condition = pd.DataFrame(columns=uniqueLabel, index=uniqueCondition)
+for condition in uniqueCondition:
+    filtered_data = dep_weather[dep_weather['conditions']==condition]
+    label_counts = filtered_data['label'].value_counts()
+    label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
+    status_by_condition.loc[condition] = label_counts
+    status_by_condition.to_csv('./table/status_by_condition.csv')
