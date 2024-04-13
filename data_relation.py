@@ -36,7 +36,7 @@ def count_label_by_date(df, uniqueDate, uniqueLabel, dir):
         label_count_by_date.loc[date] = label_counts
     label_count_by_date.to_csv(('./table/{}_label_by_date.csv').format(dir))
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(15,6))
     for labelStr in uniqueLabel:
         ax.plot(label_count_by_date.index, label_count_by_date[labelStr], label = labelStr)
     ax.set_xlabel("Date")
