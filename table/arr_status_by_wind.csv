@@ -1,0 +1,7 @@
+,Cancel,Delay 1 to 2 hours,Delay 30 mins to 1 hours,Delay 5 to 30 mins,Delay more than 2 hours,On time
+Calm (0-5.5 kmph),34,63,199,686,31,1566
+Light Breeze (5.5-11 kmph),86,139,372,1717,68,4161
+Moderate Breeze (11-16 kmph),104,235,632,2683,83,6578
+Fresh Breeze (16-22 kmph),88,252,687,2843,121,7004
+Strong Breeze (22-28 kmph),52,107,354,1284,48,3123
+Gale (>28 kmph),14,24,91,312,18,851

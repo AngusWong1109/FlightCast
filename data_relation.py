@@ -45,7 +45,7 @@ def count_label_by_date(df, uniqueDate, uniqueLabel, dir):
     ax.tick_params(axis='x', which='major', rotation=90)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(('./pics/{}status_by_date.png').format(dir))
+    plt.savefig(('./pics/{}_status_by_date.png').format(dir))
 
 ## Count label by wind speed
 def count_label_by_wind(df, uniqueLabel, dir):
@@ -70,7 +70,7 @@ def count_label_by_flight_mode(df, uniqueLabel, dir):
         status_by_flight_mode.to_csv(('./table/{}_status_by_flight_mode.csv').format(dir))
 
 ##Count label by place
-def count_label_by_destination(df, uniqueLabel, uniqueDestination):
+def count_label_by_destination(df, uniqueLabel, uniqueDestination, uniqueDate):
     status_by_destination = pd.DataFrame(columns=uniqueLabel, index=uniqueDate)
     for destination in uniqueDestination:
         for dateStr in uniqueDate:
@@ -78,7 +78,7 @@ def count_label_by_destination(df, uniqueLabel, uniqueDestination):
             label_counts = filteredData['label'].value_counts()
             label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
             status_by_destination.loc[dateStr] = label_counts
-            status_by_destination.to_csv(('./table/dep_flight_status_{}.csv').format(destination))
+            status_by_destination.to_csv(('./table/dep/flight_status_{}.csv').format(destination))
 
             fig, ax = plt.subplots()
             for labelStr in uniqueLabel:
@@ -89,33 +89,68 @@ def count_label_by_destination(df, uniqueLabel, uniqueDestination):
             ax.tick_params(axis='x', which='major', rotation=90)
             plt.legend()
             plt.tight_layout()
-            plt.savefig(('./pics/dep_flight_status_{}').format(destination))
+            plt.savefig(('./pics/dep/flight_status_{}').format(destination))
             plt.close()
+
+def count_label_by_origin(df, uniqueLabel, uniqueOrigin, uniqueDate):
+    status_by_origin = pd.DataFrame(columns=uniqueLabel, index=uniqueDate)
+    for origin in uniqueOrigin:
+        for dateStr in uniqueDate:
+            filteredData = df[(df['date'] == dateStr) & (df['origin'] == origin)]
+            label_counts = filteredData['label'].value_counts()
+            label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
+            status_by_origin.loc[dateStr] = label_counts
+            status_by_origin.to_csv(('./table/arr/flight_status_{}.csv').format(origin))
+
+            fig, ax = plt.subplots()
+            for labelStr in uniqueLabel:
+                ax.plot(status_by_origin.index, status_by_origin[labelStr], marker='o', markersize=4, label = labelStr)
+            ax.set_xlabel("Date")
+            ax.set_ylabel("Count")
+            ax.set_title(("Flight status from Hong Kong to {}").format(origin))
+            ax.tick_params(axis='x', which='major', rotation=90)
+            plt.legend()
+            plt.tight_layout()
+            plt.savefig(('./pics/arr/flight_status_{}').format(origin))
+            plt.close()
+
+def count_label_by_condition(df, uniqueLabel, uniqueCondition, dir):
+    status_by_condition = pd.DataFrame(columns=uniqueLabel, index=uniqueCondition)
+    for condition in uniqueCondition:
+        filtered_data = df[df['conditions']==condition]
+        label_counts = filtered_data['label'].value_counts()
+        label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
+        status_by_condition.loc[condition] = label_counts
+        status_by_condition.to_csv(('./table/{}_status_by_condition.csv').format(dir))
 
 dep_weather = merged_dep_weather_data()
 
-uniqueLabel = np.unique(dep_weather['label']) ## 6 labels
+depUniqueLabel = np.unique(dep_weather['label']) ## 6 labels
 ## Cancel, Delay 5 to 30 mins, Delay 30 mins to 1 hours, Delay 1 to 2 hours, Delay more than 2 hours, On time
-uniqueDate = np.unique(dep_weather['date']) #100 unique dates
-uniqueAirlines = np.unique(dep_weather['airline']) #219 unique value
-uniqueDestination = np.unique(dep_weather['destination']) #122 unique destination
-uniqueCondition = np.unique(dep_weather['conditions']) #6 weather conditions
+depUniqueDate = np.unique(dep_weather['date']) #100 unique dates
+depUniqueAirlines = np.unique(dep_weather['airline']) #219 unique value
+depUniqueDestination = np.unique(dep_weather['destination']) #122 unique destination
+depUniqueCondition = np.unique(dep_weather['conditions']) #6 weather conditions
+DEP_DIR = 'dep'
 
-count_label_by_destination(dep_weather, uniqueLabel, uniqueDestination)
+# count_label_by_date(dep_weather, depUniqueDate, depUniqueLabel, DEP_DIR)
+# count_label_by_wind(dep_weather, depUniqueLabel, DEP_DIR)
+# count_label_by_flight_mode(dep_weather, depUniqueLabel, DEP_DIR)
+count_label_by_destination(dep_weather, depUniqueLabel, depUniqueDestination, depUniqueDate)
+# count_label_by_condition(dep_weather, depUniqueLabel, depUniqueCondition, DEP_DIR)
 
-# status_by_condition = pd.DataFrame(columns=uniqueLabel, index=uniqueCondition)
-# for condition in uniqueCondition:
-#     filtered_data = dep_weather[dep_weather['conditions']==condition]
-#     label_counts = filtered_data['label'].value_counts()
-#     label_counts = label_counts.reindex(uniqueLabel, fill_value=0)
-#     status_by_condition.loc[condition] = label_counts
-#     status_by_condition.to_csv('./table/status_by_condition.csv')
+arr_weather = merged_arr_weather_data()
 
-# arr_weather = merged_arr_weather_data()
+arrUniqueLabel = np.unique(arr_weather['label']) ## 6 labels
+## Cancel, Delay 5 to 30 mins, Delay 30 mins to 1 hours, Delay 1 to 2 hours, Delay more than 2 hours, On time
+arrUniqueDate = np.unique(arr_weather['date']) #100 unique dates
+arrUniqueAirlines = np.unique(arr_weather['airline'])
+arrUniqueOrigin = np.unique(arr_weather['origin'])
+arrUniqueCondition = np.unique(arr_weather['conditions']) #6 weather conditions
+ARR_DIR = 'arr'
 
-# uniqueLabel = np.unique(arr_weather['label']) ## 6 labels
-# ## Cancel, Delay 5 to 30 mins, Delay 30 mins to 1 hours, Delay 1 to 2 hours, Delay more than 2 hours, On time
-# uniqueDate = np.unique(arr_weather['date']) #100 unique dates
-# uniqueAirlines = np.unique(arr_weather['airline'])
-# uniqueOrigin = np.unique(arr_weather['origin'])
-# uniqueCondition = np.unique(arr_weather['conditions']) #6 weather conditions
+# count_label_by_date(arr_weather, arrUniqueDate, arrUniqueLabel, ARR_DIR)
+# count_label_by_wind(arr_weather, arrUniqueLabel, ARR_DIR)
+# count_label_by_flight_mode(arr_weather, arrUniqueLabel, ARR_DIR)
+# count_label_by_origin(arr_weather, arrUniqueLabel, arrUniqueOrigin, arrUniqueDate)
+# count_label_by_condition(arr_weather, arrUniqueLabel, arrUniqueCondition, ARR_DIR)

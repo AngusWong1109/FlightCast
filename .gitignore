@@ -1,4 +1,6 @@
 .DS_Store
 __pycache__
-table/*_flight_status_*.csv
-pics/*_flight_status_*.png
+table/dep
+table/arr
+pics/dep
+pics/arr
