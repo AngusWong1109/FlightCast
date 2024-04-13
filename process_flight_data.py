@@ -4,7 +4,7 @@ import ast
 
 def label_data(row):
     if row['status'] == 'Cancelled':
-        return 'Cancell'
+        return 'Cancel'
     elif row['actual time diff'] > 120:
             return 'Delay more than 2 hours'
     elif row['actual time diff'] > 60:
