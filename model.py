@@ -82,15 +82,15 @@ for i in range(num):
     X_train_shuffled = shuffled_data[:, :-1]
     Y_train_shuffled = shuffled_data[:, -1]
     model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:1], Y_train_shuffled[:1])
-    full_performance = model.score(X_test, Y_test)
+    full_performance = model.score(X_test, y_test)
     for j in range(1, size):
         print(i, ", ", j)
         current_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:j+1], Y_train_shuffled[:j+1])
-        current_performance = current_model.score(X_test, Y_test)
+        current_performance = current_model.score(X_test, y_test)
         if abs(current_performance - full_performance) < epsilon:
             continue
         new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:-1], Y_train_shuffled[:-1])
-        new_performance = new_model.score(X_test, Y_test)
+        new_performance = new_model.score(X_test, y_test)
         marginal_contribution = current_performance - new_performance
         shapley[j] += marginal_contribution / (size + 1)
 shapley /= 10
@@ -162,15 +162,15 @@ for i in range(num):
     X_train_shuffled = shuffled_data[:, :-1]
     Y_train_shuffled = shuffled_data[:, -1]
     model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:1], Y_train_shuffled[:1])
-    full_performance = model.score(X_test, Y_test)
+    full_performance = model.score(X_test, y_test)
     for j in range(1, size):
         print(i, ", ", j)
         current_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:j+1], Y_train_shuffled[:j+1])
-        current_performance = current_model.score(X_test, Y_test)
+        current_performance = current_model.score(X_test, y_test)
         if abs(current_performance - full_performance) < epsilon:
             continue
         new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:-1], Y_train_shuffled[:-1])
-        new_performance = new_model.score(X_test, Y_test)
+        new_performance = new_model.score(X_test, y_test)
         marginal_contribution = current_performance - new_performance
         shapley[j] += marginal_contribution / (size + 1)
 shapley /= 10
