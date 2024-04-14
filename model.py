@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 import time
 import random
+import joblib
 
 dep_weather = merged_dep_weather_data()
 arr_weather = merged_arr_weather_data()
@@ -32,8 +33,11 @@ y_pred = dep_model.predict(X_test)
 y_score = dep_model.predict_proba(X_test)
 cm = confusion_matrix(y_test, y_pred)
 orig_accuracy = dep_model.score(X_test, y_test)
-# print("Departure model: ")
-# print(orig_accuracy)
+
+joblib.dump(dep_model, './model/dep_model.sav')
+
+print("Departure model: ")
+print(orig_accuracy)
 # print(cm)
 
 # ## Leave-One-Out Influence
@@ -87,7 +91,9 @@ cm = confusion_matrix(y_test, y_pred)
 orig_accuracy = arr_model.score(X_test, y_test)
 print("Arrival model: ")
 print(orig_accuracy)
-print(cm)
+# print(cm)
+
+joblib.dump(dep_model, './model/arr_model.sav')
 
 ## Leave-One-Out Influence
 # n = 1000
