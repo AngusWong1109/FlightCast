@@ -34,44 +34,42 @@ y_score = dep_model.predict_proba(X_test)
 cm = confusion_matrix(y_test, y_pred)
 orig_accuracy = dep_model.score(X_test, y_test)
 
-joblib.dump(dep_model, './model/dep_model.sav')
-
 print("Departure model: ")
 print(orig_accuracy)
-# print(cm)
+print(cm)
 
-# ## Leave-One-Out Influence
-# n = 1000
-# removeData = [] #To ensure that we are not removing any data that we have removed before
-# influence = np.zeros((n, 4))
-# for x in range(X_train.shape[0]):
-#     removeData.append(False)
-# for i in range(n):    
-#     #restore dataset
-#     modified_Xtrain = X_train
-#     modified_Ytrain = y_train
-#     rmd = random.randint(0,len(modified_Xtrain)-1)
-#     while(removeData[rmd] == True):
-#         rmd = random.randint(0,len(modified_Xtrain)-1)
-#     removeData[rmd] = True    
-#     print('index = ', rmd)
-#     removeData.append(rmd)
-#     #Removing data from both X_train and Y_train
-#     modified_Xtrain = np.delete(modified_Xtrain, rmd, axis=0)
-#     modified_Ytrain = np.delete(modified_Ytrain, rmd, axis=0)
-#     #Build the model after removing the training data
-#     new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(modified_Xtrain, modified_Ytrain)
-#     #Find the accuracy rate
-#     new_accuracy = new_model.score(X_test, y_test)
-#     print("The score of ", i+1, "th run is ", new_accuracy)
-#     influence_score = new_accuracy - orig_accuracy
-#     influence[i][0] = rmd
-#     influence[i][1] = orig_accuracy
-#     influence[i][2] = new_accuracy
-#     influence[i][3] = influence_score
-#     print("influence score: ", influence_score)
+## Leave-One-Out Influence
+n = 1000
+removeData = [] #To ensure that we are not removing any data that we have removed before
+influence = np.zeros((n, 4))
+for x in range(X_train.shape[0]):
+    removeData.append(False)
+for i in range(n):    
+    #restore dataset
+    modified_Xtrain = X_train
+    modified_Ytrain = y_train
+    rmd = random.randint(0,len(modified_Xtrain)-1)
+    while(removeData[rmd] == True):
+        rmd = random.randint(0,len(modified_Xtrain)-1)
+    removeData[rmd] = True    
+    print('index = ', rmd)
+    removeData.append(rmd)
+    #Removing data from both X_train and Y_train
+    modified_Xtrain = np.delete(modified_Xtrain, rmd, axis=0)
+    modified_Ytrain = np.delete(modified_Ytrain, rmd, axis=0)
+    #Build the model after removing the training data
+    new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(modified_Xtrain, modified_Ytrain)
+    #Find the accuracy rate
+    new_accuracy = new_model.score(X_test, y_test)
+    print("The score of ", i+1, "th run is ", new_accuracy)
+    influence_score = new_accuracy - orig_accuracy
+    influence[i][0] = rmd
+    influence[i][1] = orig_accuracy
+    influence[i][2] = new_accuracy
+    influence[i][3] = influence_score
+    print("influence score: ", influence_score)
 
-# np.savetxt('./influence_data/dep_LOO_influence.txt', influence, delimiter=',')
+np.savetxt('./influence_data/dep_LOO_influence.txt', influence, delimiter=',')
 
 arr_columns = ['time', 'flight_number', 'airline', 'origin', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'label']
 arr_weather = arr_weather[arr_columns]
@@ -91,39 +89,37 @@ cm = confusion_matrix(y_test, y_pred)
 orig_accuracy = arr_model.score(X_test, y_test)
 print("Arrival model: ")
 print(orig_accuracy)
-# print(cm)
-
-joblib.dump(dep_model, './model/arr_model.sav')
+print(cm)
 
 ## Leave-One-Out Influence
-# n = 1000
-# removeData = [] #To ensure that we are not removing any data that we have removed before
-# influence = np.zeros((n,4))
-# for x in range(X_train.shape[0]):
-#     removeData.append(False)
-# for i in range(n):    
-#     #restore dataset
-#     modified_Xtrain = X_train
-#     modified_Ytrain = y_train
-#     rmd = random.randint(0,len(modified_Xtrain)-1)
-#     while(removeData[rmd] == True):
-#         rmd = random.randint(0,len(modified_Xtrain)-1)
-#     removeData[rmd] = True    
-#     print('index = ', rmd)
-#     removeData.append(rmd)
-#     #Removing data from both X_train and Y_train
-#     modified_Xtrain = np.delete(modified_Xtrain, rmd, axis=0)
-#     modified_Ytrain = np.delete(modified_Ytrain, rmd, axis=0)
-#     #Build the model after removing the training data
-#     new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(modified_Xtrain, modified_Ytrain)
-#     #Find the accuracy rate
-#     new_accuracy = new_model.score(X_test, y_test)
-#     print("The score of ", i+1, "th run is ", new_accuracy)
-#     influence_score = new_accuracy - orig_accuracy
-#     influence[i][0] = rmd
-#     influence[i][1] = orig_accuracy
-#     influence[i][2] = new_accuracy
-#     influence[i][3] = influence_score
-#     print("influence score: ", influence_score)
+n = 1000
+removeData = [] #To ensure that we are not removing any data that we have removed before
+influence = np.zeros((n,4))
+for x in range(X_train.shape[0]):
+    removeData.append(False)
+for i in range(n):    
+    #restore dataset
+    modified_Xtrain = X_train
+    modified_Ytrain = y_train
+    rmd = random.randint(0,len(modified_Xtrain)-1)
+    while(removeData[rmd] == True):
+        rmd = random.randint(0,len(modified_Xtrain)-1)
+    removeData[rmd] = True    
+    print('index = ', rmd)
+    removeData.append(rmd)
+    #Removing data from both X_train and Y_train
+    modified_Xtrain = np.delete(modified_Xtrain, rmd, axis=0)
+    modified_Ytrain = np.delete(modified_Ytrain, rmd, axis=0)
+    #Build the model after removing the training data
+    new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(modified_Xtrain, modified_Ytrain)
+    #Find the accuracy rate
+    new_accuracy = new_model.score(X_test, y_test)
+    print("The score of ", i+1, "th run is ", new_accuracy)
+    influence_score = new_accuracy - orig_accuracy
+    influence[i][0] = rmd
+    influence[i][1] = orig_accuracy
+    influence[i][2] = new_accuracy
+    influence[i][3] = influence_score
+    print("influence score: ", influence_score)
 
-# np.savetxt('./influence_data/arr_LOO_influence.txt', influence, delimiter=',')
+np.savetxt('./influence_data/arr_LOO_influence.txt', influence, delimiter=',')
