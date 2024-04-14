@@ -133,11 +133,11 @@ depUniqueDestination = np.unique(dep_weather['destination']) #122 unique destina
 depUniqueCondition = np.unique(dep_weather['conditions']) #6 weather conditions
 DEP_DIR = 'dep'
 
-# count_label_by_date(dep_weather, depUniqueDate, depUniqueLabel, DEP_DIR)
-# count_label_by_wind(dep_weather, depUniqueLabel, DEP_DIR)
-# count_label_by_flight_mode(dep_weather, depUniqueLabel, DEP_DIR)
-# count_label_by_destination(dep_weather, depUniqueLabel, depUniqueDestination, depUniqueDate)
-# count_label_by_condition(dep_weather, depUniqueLabel, depUniqueCondition, DEP_DIR)
+count_label_by_date(dep_weather, depUniqueDate, depUniqueLabel, DEP_DIR)
+count_label_by_wind(dep_weather, depUniqueLabel, DEP_DIR)
+count_label_by_flight_mode(dep_weather, depUniqueLabel, DEP_DIR)
+count_label_by_destination(dep_weather, depUniqueLabel, depUniqueDestination, depUniqueDate)
+count_label_by_condition(dep_weather, depUniqueLabel, depUniqueCondition, DEP_DIR)
 
 arr_weather = merged_arr_weather_data()
 
@@ -149,8 +149,8 @@ arrUniqueOrigin = np.unique(arr_weather['origin'])
 arrUniqueCondition = np.unique(arr_weather['conditions']) #6 weather conditions
 ARR_DIR = 'arr'
 
-# count_label_by_date(arr_weather, arrUniqueDate, arrUniqueLabel, ARR_DIR)
-# count_label_by_wind(arr_weather, arrUniqueLabel, ARR_DIR)
-# count_label_by_flight_mode(arr_weather, arrUniqueLabel, ARR_DIR)
+count_label_by_date(arr_weather, arrUniqueDate, arrUniqueLabel, ARR_DIR)
+count_label_by_wind(arr_weather, arrUniqueLabel, ARR_DIR)
+count_label_by_flight_mode(arr_weather, arrUniqueLabel, ARR_DIR)
 count_label_by_origin(arr_weather, arrUniqueLabel, arrUniqueOrigin, arrUniqueDate)
 count_label_by_condition(arr_weather, arrUniqueLabel, arrUniqueCondition, ARR_DIR)
