@@ -25,8 +25,6 @@ for feather in dep_encode_col:
 
 X = dep_weather.iloc[:, :-1]
 y = dep_weather.iloc[:, -1]
-X = X.to_numpy()
-y = y.to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 dep_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train, y_train)
@@ -71,31 +69,6 @@ orig_accuracy = dep_model.score(X_test, y_test)
 
 # np.savetxt('./influence_data/dep_LOO_influence.txt', influence, delimiter=',')
 
-## Find Shapley values
-num = 10
-epsilon = 0.01
-data = np.concatenate((X_train, y_train[:, None]), axis=1)
-size = len(data)
-shapley = np.zeros(size)
-for i in range(num):
-    shuffled_data = np.random.permutation(data)
-    X_train_shuffled = shuffled_data[:, :-1]
-    Y_train_shuffled = shuffled_data[:, -1]
-    model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:1], Y_train_shuffled[:1])
-    full_performance = model.score(X_test, y_test)
-    for j in range(1, size):
-        print(i, ", ", j)
-        current_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:j+1], Y_train_shuffled[:j+1])
-        current_performance = current_model.score(X_test, y_test)
-        if abs(current_performance - full_performance) < epsilon:
-            continue
-        new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:-1], Y_train_shuffled[:-1])
-        new_performance = new_model.score(X_test, y_test)
-        marginal_contribution = current_performance - new_performance
-        shapley[j] += marginal_contribution / (size + 1)
-shapley /= 10
-np.savetxt('./influence_data/dep_shapley.txt', shapley, delimiter=',')
-
 arr_columns = ['time', 'flight_number', 'airline', 'origin', 'temp', 'feelslike', 'dew', 'humidity', 'precip', 'precipprob', 'windgust', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions', 'label']
 arr_weather = arr_weather[arr_columns]
 arr_encode_col = ['time', 'flight_number', 'airline', 'origin' ,'conditions', 'label']
@@ -105,8 +78,6 @@ for feather in arr_encode_col:
 
 X = arr_weather.iloc[:, :-1]
 y = arr_weather.iloc[:, -1]
-X = X.to_numpy()
-y = y.to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 arr_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train, y_train)
@@ -150,28 +121,3 @@ print(cm)
 #     print("influence score: ", influence_score)
 
 # np.savetxt('./influence_data/arr_LOO_influence.txt', influence, delimiter=',')
-
-## Find Shapley values
-num = 10
-epsilon = 0.01
-data = np.concatenate((X_train, y_train[:, None]), axis=1)
-size = len(data)
-shapley = np.zeros(size)
-for i in range(num):
-    shuffled_data = np.random.permutation(data)
-    X_train_shuffled = shuffled_data[:, :-1]
-    Y_train_shuffled = shuffled_data[:, -1]
-    model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:1], Y_train_shuffled[:1])
-    full_performance = model.score(X_test, y_test)
-    for j in range(1, size):
-        print(i, ", ", j)
-        current_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:j+1], Y_train_shuffled[:j+1])
-        current_performance = current_model.score(X_test, y_test)
-        if abs(current_performance - full_performance) < epsilon:
-            continue
-        new_model = RandomForestClassifier(n_estimators=250, min_samples_split=10).fit(X_train_shuffled[:-1], Y_train_shuffled[:-1])
-        new_performance = new_model.score(X_test, y_test)
-        marginal_contribution = current_performance - new_performance
-        shapley[j] += marginal_contribution / (size + 1)
-shapley /= 10
-np.savetxt('./influence_data/arr_shapley.txt', shapley, delimiter=',')
