@@ -1,13 +1,19 @@
+# Attention
+
+The FlightStatusPrediction folder stores the android app. It could be open with Android Studio, however, the prediction in the application is not working due to issue with accessing in assets folder. Therefore, it is created a [predict.py](predict.py). When you run the python file, it will generate the prediction of those future flight, and the list will be printed out.
+
 # Introduction
 
-This is a flight status prediction app based on data from Hong Kong International Airport (HKIA) provided by the Airport Authority Hong Kong (AA). The prediction will be divided into several categories: **On time**, **Cancelled**, **Delayed 5 to 30 minutes**, **Delayed 30 mins to 1 hours**, **Delayed 1 - 2 hours**, and **Delayed more than 2 hours**.
+FlightCast is a flight status prediction app based on data from Hong Kong International Airport (HKIA) provided by the Airport Authority Hong Kong (AA). The prediction will be divided into several categories: **On time**, **Cancelled**, **Delayed 5 to 30 minutes**, **Delayed 30 mins to 1 hours**, **Delayed 1 - 2 hours**, and **Delayed more than 2 hours**.
 
 # Data file
 
-Captured data is flight information from 2023/12/23 to 2024/03/25
+Captured data is flight information from 2023/12/23 to 2024/03/30
 
 - [`pass_departure_data.csv`](pass_departure_data.csv): Flight information of civil departure flight
 - [`pass_arrival_data.csv`](pass_arrival_data.csv): Flight information of civil arrival flight
+- [`weather_data.csv`](weather_data.csv): Weather historial data of HKIA collected by [Visual Crossing](https://www.visualcrossing.com) from the Hong Kong Observatory.
+- [`future_arr_flight.csv`](future_arr_flight.csv): Will be storing the future flight information data, it will be updated whenever [predict.py](predict.py) is run.
 
 # Resources
 
@@ -17,8 +23,8 @@ Captured data is flight information from 2023/12/23 to 2024/03/25
 - Scikit-learn
 - Pandas
 - Matplotlib
-- Tensorflow
-- Tensorflow Lite
+- Chaquopy
+- Numpy
 
 ## Programming Language Used
 
