@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ArrivalShowFlightInfoActivity">
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoFlightNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_flight_no"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ArrFlightInfoOrigin" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoAirline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_airline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoFlightNo" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_time"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_arrFlightInfoDate"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_ArrFlightInfoOrigin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_place"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoDate" />
+
+    <TextView
+        android:id="@+id/label_arrival_baggage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/baggage_belt"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/label_arrival_terminal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoAirline" />
+
+    <TextView
+        android:id="@+id/label_arrival_terminal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/terminal"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/label_arrival_hall"
+        app:layout_constraintStart_toEndOf="@+id/label_arrival_baggage"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoAirline" />
+
+    <TextView
+        android:id="@+id/label_arrival_hall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/hall"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/label_arrival_terminal"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoAirline" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoBaggage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_baggage"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label_arrival_baggage"
+        app:layout_constraintStart_toStartOf="@+id/label_arrival_baggage"
+        app:layout_constraintTop_toBottomOf="@+id/label_arrival_baggage" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoTerminal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_terminal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label_arrival_terminal"
+        app:layout_constraintStart_toStartOf="@+id/label_arrival_terminal"
+        app:layout_constraintTop_toBottomOf="@+id/label_arrival_terminal" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoHall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_hall"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label_arrival_hall"
+        app:layout_constraintStart_toStartOf="@+id/label_arrival_hall"
+        app:layout_constraintTop_toBottomOf="@+id/label_arrival_hall" />
+
+    <TextView
+        android:id="@+id/label_predict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_predict"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoBaggage" />
+
+    <TextView
+        android:id="@+id/tv_arrFlightInfoPredict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/demo_predict_label"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/label_predict"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoBaggage" />
+
+    <Button
+        android:id="@+id/btn_arrFlightInfoPredict"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/royal_blue"
+        android:text="@string/predict"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_arrFlightInfoPredict" />
+</androidx.constraintlayout.widget.ConstraintLayout>

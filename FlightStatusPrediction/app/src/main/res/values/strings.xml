@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">FlightCast</string>
+    <string name="arrival">Arrival</string>
+    <string name="departure">Departure</string>
+    <string name="captial_wed">WED</string>
+    <string name="demo_date_3_26">3/26</string>
+    <string name="demo_time">10:09</string>
+    <string name="detail"><![CDATA[Detail >]]></string>
+    <string name="demo_place">Hong Kong</string>
+    <string name="demo_status">Gate Closed</string>
+    <string name="demo_flight_no">CX 1234</string>
+    <string name="date_selected">Date selected:</string>
+    <string name="demo_date">2024-04-12</string>
+    <string name="demo_airline">CX</string>
+    <string name="baggage_belt">Baggage Belt</string>
+    <string name="terminal">Terminal</string>
+    <string name="hall">Hall</string>
+    <string name="demo_baggage">26</string>
+    <string name="demo_terminal">T1</string>
+    <string name="demo_hall">A</string>
+    <string name="label_predict">Predict:</string>
+    <string name="demo_predict_label">On time</string>
+    <string name="predict">Predict</string>
+    <string name="gate">Gate</string>
+    <string name="aisle">Aisle</string>
+    <string name="demo_aisle">BC</string>
+    <string name="demo_gate">131</string>
+
+</resources>

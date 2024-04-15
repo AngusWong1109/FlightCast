@@ -1,15 +1,10 @@
-# import tensorflow_decision_forests as tfdf
-# import keras
-# from keras.layers import Dense, Activation
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, RocCurveDisplay, accuracy_score
+from sklearn.metrics import confusion_matrix
 from merge_data import merged_dep_weather_data, merged_arr_weather_data
-from process_flight_data import process_flight_data
 import pandas as pd
 import numpy as np
-import time
 import random
 import joblib
 
@@ -23,6 +18,7 @@ dep_encode_col = ['time', 'flight_number', 'airline', 'destination' ,'conditions
 for feather in dep_encode_col:
     le = LabelEncoder()
     dep_weather[feather] = le.fit_transform(dep_weather[feather])
+    np.save(('./label_classes/dep_{}.npy').format(feather), le.classes_)
 
 X = dep_weather.iloc[:, :-1]
 y = dep_weather.iloc[:, -1]
@@ -33,6 +29,8 @@ y_pred = dep_model.predict(X_test)
 y_score = dep_model.predict_proba(X_test)
 cm = confusion_matrix(y_test, y_pred)
 orig_accuracy = dep_model.score(X_test, y_test)
+
+joblib.dump(dep_model, './model/dep_model.sav')
 
 print("Departure model: ")
 print(orig_accuracy)
@@ -77,6 +75,7 @@ arr_encode_col = ['time', 'flight_number', 'airline', 'origin' ,'conditions', 'l
 for feather in arr_encode_col:
     le = LabelEncoder()
     arr_weather[feather] = le.fit_transform(arr_weather[feather])
+    np.save(('./label_classes/arr_{}.npy').format(feather), le.classes_)
 
 X = arr_weather.iloc[:, :-1]
 y = arr_weather.iloc[:, -1]
@@ -90,6 +89,8 @@ orig_accuracy = arr_model.score(X_test, y_test)
 print("Arrival model: ")
 print(orig_accuracy)
 print(cm)
+
+joblib.dump(arr_model, './model/arr_model.sav')
 
 ## Leave-One-Out Influence
 n = 1000
