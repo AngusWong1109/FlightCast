@@ -53,8 +53,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var weatherRepository: WeatherRepository
     private lateinit var weatherViewModelFactory: WeatherViewModelFactory
     private lateinit var weatherViewModel: WeatherViewModel
-
-    private lateinit var assetManager: AssetManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,13 +61,6 @@ class HomeActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-
-        assetManager = this.applicationContext.assets
-
-        val inputStream = assetManager.list("label_classes")
-        if (inputStream != null) {
-            Log.i("inputStream", inputStream.joinToString())
         }
 
         arrFlightDb = ArrivalFlightDatabase.getInstance(this)
